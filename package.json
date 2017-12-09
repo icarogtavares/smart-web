@@ -1,0 +1,32 @@
+{
+  "name": "smart-web",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.9.3"
+  },
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf build && mkdir build",
+    "build-server": "babel server --out-dir build",
+    "build": "npm run clean && npm run build-server",
+    "start": "node ./build/src/app.js",
+    "dev": "NODE_ENV=development DEBUG=smart-web:* nodemon --exec 'babel-node' ./src/app.js",
+    "loadtest": "NODE_ENV=production loadtest http://localhost:3000/URL_HERE -t 30 -c 12 --rps 100"
+  },
+  "author": "Icaro Tavares <icarotavares@live.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "debug": "^3.1.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "throng": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}

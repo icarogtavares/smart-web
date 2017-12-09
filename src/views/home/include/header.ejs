@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SMART</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home.css">
+    
+</head>
+
+<body>
+
+
+
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+                <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>SMART</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <p id="welcome"></p>
+                <li>
+                    <a href="/home" rel="nofollow">Página Inicial</a>
+                </li>
+                <li>
+                    <a href="/historico" rel="nofollow">Histórico</a>
+                </li>
+                <li class="active">
+                    <a href="#locaisSubmenu" data-toggle="collapse" aria-expanded="false">Locais</a>
+                    <ul class="collapse list-unstyled" id="locaisSubmenu">
+                        <%for(i=0; i<locais.length; i++) {%>
+                        <li><a href="<%=locais[i].url%>"><%=locais[i].nome%></a></li>
+                        <%}%>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Sobre</a>
+                </li>
+
+                <li>
+                    <a href="/" id="logout">logout</a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                            </button>
+                    </div>
+                </div>

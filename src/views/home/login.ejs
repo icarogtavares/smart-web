@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>Smart</title>
+</head>
+
+<body>
+
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" class="form-control" id="r_username" placeholder="usuário" />
+                <input type="email" class="form-control" id="r_email" placeholder="e-mail" />
+                <input type="password" class="form-control" id="r_password" placeholder="password" />
+                
+                <button type="button" class="btn btn-default" id="btn_register" name="btn_login">CRIAR</button>
+
+                <p class="message">Possui cadastro? <a href="#">Faça o login</a></p>
+            </form>
+            <form class="login-form">
+                <input type="text" class="form-control" id="l_username" placeholder="usuário" />
+                <input type="password" class="form-control" id="l_password" placeholder="senha" />
+                <button type="button" class="btn btn-default" id="btn_login" name="btn_login">LOGIN</button>
+                <div id="resultado"></div>
+                <p class="message">Ainda não é registrado? <a href="#">Crie uma conta</a></p>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>
