@@ -1,5 +1,40 @@
 <% include include/header %>
+<script>
+window.onload = function () {
+	
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	
+	title:{
+		text:""
+	},
+	axisX:{
+		interval: 1
+	},
+	axisY2:{
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)",
+		title: "Nível de ruído"
+	},
+	data: [{
+		type: "bar",
+		name: "bairros",
+		axisYType: "secondary",
+		color: "#014D65",
+		dataPoints: [
+			<%for(i=0; i<locais.length; i++) {%>
+            { y: <%=locais[i].avg%>, label: '<%=locais[i].nome%>'},
+            <%}%>
+		]
+	}]
+});
+chart.render();
 
-<p> historico </p>
+}
+</script>
+
+<h1> Histórico </h1>
+    <div id="chartContainer" style="height: 300px; width: 500px;"></div>
+<script src="js/chart.loader.js"></script>
 
 <% include include/footer %>
