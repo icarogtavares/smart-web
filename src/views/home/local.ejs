@@ -19,11 +19,12 @@
 <script src="/js/jquery-dateFormat.min.js"></script>
 <script src="/js/browserMqtt.js"></script>
 <script type="text/javascript">
-    const TOPIC_NOISE = 'SMART/NOISE'
+    const TOPIC_NOISE = 'SMART/NOISE';
+    const ip = '<%=ip%>';
 
     $(document).ready(function() {
     
-        var client = mqtt.connect({host: '192.168.25.10', port: '1884'})
+        var client = mqtt.connect({host: ip, port: '1884'})
     
 
         client.on('connect', function() {

@@ -35,7 +35,7 @@ router.get('/', (req, res, next) => {
   const id_local = Number(req.params.id)-1;
   const existeLocal = locais.length > id_local;
   if(existeLocal) {
-    return res.render('home/local', {locais: locais, id_local: id_local});
+    return res.render('home/local', {ip: process.env.MQTT || 'localhost', locais: locais, id_local: id_local});
   }
   return next();
 })
