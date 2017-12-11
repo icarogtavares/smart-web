@@ -1,0 +1,80 @@
+<% include include/header %>
+
+<select id="selectBoxLocais">
+        <%for(i=0; i<locais.length; i++) {%>
+            <option value="<%=i%>"><%=locais[i].nome%></option>
+        <%}%>
+</select>
+
+<h1 id="tituloLocal"> <%=locais[0].nome || '-'%> </h1>
+
+<table id="historicoRuido" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Ruído</th>
+      <th>Horário</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    </tr>
+  </tbody>
+</table>
+
+<script src="/js/jquery-dateFormat.min.js"></script>
+<script src="/js/browserMqtt.js"></script>
+<script type="text/javascript">
+    const TOPIC_NOISE = 'SMART/NOISE';
+    const ip = '<%=ip%>';
+
+    $(document).ready(function() {
+
+        $("#selectBoxLocais").on("change", function() {
+
+            let selectedVal = $(this).find(':selected').val();
+            let selectedText = $(this).find(':selected').text();
+            $('#tituloLocal').text(function(i, oldText) {
+                return selectedText;
+            });
+        });
+    
+        let client = mqtt.connect({host: ip, port: '1884'})
+    
+
+        client.on('connect', function() {
+            console.log("Connected")
+            client.subscribe(TOPIC_NOISE);
+        })
+
+        client.on("message", function (topic, payload) {
+            switch (topic) {
+            case TOPIC_NOISE:
+                return handleTopicNoise(payload)
+            }
+            console.log('No handler for topic %s', topic)
+        })
+
+        function handleTopicNoise (message) {
+            try {
+                const messageJson = JSON.parse(message.toString());
+
+                if('sound_level' in messageJson) {
+                    let date = new Date();
+                    let dia = $.format.date(date, "dd/MM/yyyy")
+                    let horario = $.format.date(date, "HH:mm")
+                    // $('#historicoRuido tbody').append('<tr><td>'+ messageJson.sound_level +'</td><td>'+ horario +'</td><td>'+ dia +'</td></tr>');
+                    $('<tr><td>'+ messageJson.sound_level +'</td><td>'+ horario +'</td><td>'+ dia +'</td></tr>').insertBefore('#historicoRuido > tbody > tr:first');
+                } else {
+                    console.log("RECEIVED " + message.toString());
+                }
+            } catch(err) {
+                console.log("MQTT Received invalid json message.");
+                console.log(message.toString());
+            }
+        
+        }
+    });
+</script>
+
+<% include include/footer %>

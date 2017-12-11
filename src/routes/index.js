@@ -40,4 +40,8 @@ router.get('/', (req, res, next) => {
   return next();
 })
 
+.get('/locais', (req, res, next) => {
+    res.render('home/locais', {ip: process.env.MQTT || 'localhost', locais: locais});
+})
+
 export default router;
