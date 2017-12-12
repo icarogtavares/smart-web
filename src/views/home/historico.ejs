@@ -1,40 +1,63 @@
 <% include include/header %>
+
+<script src="/js/highcharts.js"></script>
+<script src="/js/exporting.js"></script>
+
+<div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <script>
-window.onload = function () {
-	
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	
-	title:{
-		text:""
-	},
-	axisX:{
-		interval: 1
-	},
-	axisY2:{
-		interlacedColor: "rgba(1,77,101,.2)",
-		gridColor: "rgba(1,77,101,.1)",
-		title: "Nível de ruído"
-	},
-	data: [{
-		type: "bar",
-		name: "bairros",
-		axisYType: "secondary",
-		color: "#014D65",
-		dataPoints: [
-			<%for(i=0; i<locais.length; i++) {%>
-            { y: <%=locais[i].avg%>, label: '<%=locais[i].nome%>'},
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Média do Nível de Ruído'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        type: 'category',
+        labels: {
+            rotation: -45,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Média do nível de ruído (decibéis)'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: 'Média (db): <b>{point.y:.1f}</b>'
+    },
+    series: [{
+        name: 'Ruído',
+        data: [
+            <%for(i=0; i<locais.length; i++) {%>
+            	['<%=locais[i].nome%>', <%=locais[i].avg%>],
             <%}%>
-		]
-	}]
+        ],
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    }]
 });
-chart.render();
-
-}
 </script>
-
-<h1> Histórico </h1>
-    <div id="chartContainer" style="height: 300px; width: 500px;"></div>
-<script src="js/chart.loader.js"></script>
 
 <% include include/footer %>
