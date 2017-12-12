@@ -17,8 +17,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-    </tr>
   </tbody>
 </table>
 
@@ -34,6 +32,7 @@
 
             let selectedVal = $(this).find(':selected').val();
             let selectedText = $(this).find(':selected').text();
+            $("#historicoRuido > tbody").empty();
             $('#tituloLocal').text(function(i, oldText) {
                 return selectedText;
             });
@@ -63,17 +62,60 @@
                     let date = new Date();
                     let dia = $.format.date(date, "dd/MM/yyyy")
                     let horario = $.format.date(date, "HH:mm")
-                    // $('#historicoRuido tbody').append('<tr><td>'+ messageJson.sound_level +'</td><td>'+ horario +'</td><td>'+ dia +'</td></tr>');
-                    $('<tr><td>'+ messageJson.sound_level +'</td><td>'+ horario +'</td><td>'+ dia +'</td></tr>').insertBefore('#historicoRuido > tbody > tr:first');
+                    if(messageJson.sound_level > 48) {
+                        insertRowInHistoricoTable("red", messageJson.sound_level, horario, dia); 
+                    } else {
+                        insertRowInHistoricoTable("black", messageJson.sound_level, horario, dia);
+                    }
                 } else {
                     console.log("RECEIVED " + message.toString());
                 }
             } catch(err) {
-                console.log("MQTT Received invalid json message.");
+                console.log("MQTT Received this json message: ");
                 console.log(message.toString());
+                console.log("Error Stack Trace:");
+                console.log(err)
             }
         
         }
+
+        function jqueryHtmlSoundLevelRowBefore(fontColor, soundLevel, horario, dia) {
+            $(`<tr>
+                <td>
+                    <font color=${fontColor}>${soundLevel}</font>
+                </td>
+                <td>
+                    <font color=${fontColor}>${horario}</font>
+                </td>
+                <td>
+                    <font color=${fontColor}>${dia}</font>
+                </td>
+            </tr>`).insertBefore('#historicoRuido > tbody > tr:first');
+        }
+
+        function jqueryHtmlSoundLevelFirstRow(fontColor, soundLevel, horario, dia) {
+            $('#historicoRuido tbody').append(`<tr>
+                <td>
+                    <font color=${fontColor}>${soundLevel}</font>
+                </td>
+                <td>
+                    <font color=${fontColor}>${horario}</font>
+                </td>
+                <td>
+                    <font color=${fontColor}>${dia}</font>
+                </td>
+            </tr>`);
+        }
+
+        function insertRowInHistoricoTable(fontColor, soundLevel, horario, dia) {
+            const rowCount = $('#historicoRuido > tbody > tr').length;
+            if(rowCount > 0) {
+                jqueryHtmlSoundLevelRowBefore(fontColor, soundLevel, horario, dia);
+            } else {
+                jqueryHtmlSoundLevelFirstRow(fontColor, soundLevel, horario, dia);
+            }
+        }
+
     });
 </script>
 
