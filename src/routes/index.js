@@ -4,7 +4,7 @@ import axios from 'axios'
 const router = express.Router();
 
 const locais = [
-  {nome: "Benfica", url: "/locais/1"},
+  {nome: "Pici", url: "/locais/1"},
   {nome: "Aldeota", url: "/locais/2", avg: 42},
   {nome: "Parquelândia", url: "/locais/3", avg: 43},
   {nome: "Damas", url: "/locais/4", avg: 45},
